@@ -18,8 +18,7 @@ def next_zero(puzzle):
     return [-1, -1]
 def unable_fun(pos_y, pos_x):
     unable = []
-    #unable = {}
-    #y = 0
+
     number_len = len (puzzle)
     unable_append = unable.append
 
@@ -38,9 +37,7 @@ def unable_fun(pos_y, pos_x):
         
         y += 1
 
-    # check 3 x 3
-    # working on check mod 3 x 3
-    
+    # check 3 x 3    
     x3_block_y_start = pos_y - (pos_y % 3)
     x3_block_y_end = x3_block_y_start + 3
 
@@ -66,44 +63,29 @@ def point_square(puzzle, pos_x, pos_y):
     #print(x_next, y_next, 'next_zero')
     unable_list = unable_fun(y_next, x_next)
     
-    #pdb.set_trace()
     if len(unable_list) == 9:
         return False
-    for y in range(y_next, y_next + 1):
-        for x in range(x_next, x_next + 1):
-            for number in range(1, len_puzzle + 1):
-                if not (number in unable_list):
-                    #save y and x
-                    puzzle[y_next][x_next] = number
-                    if point_square(puzzle, x_next, y_next):
-                        return True
-                    else:
-                        puzzle[y_next][x_next] = 0
-                        #print(x_next, y_next, 'fail')
-                        if number == 9:
-                            return False
+    for number in range(1, len_puzzle + 1):
+        if not (number in unable_list):
+            #save y and x 
+            puzzle[y_next][x_next] = number
+            if point_square(puzzle, x_next, y_next):
+                return True
+            else:
+                puzzle[y_next][x_next] = 0
+                #print(x_next, y_next, 'fail')
                 if number == 9:
                     return False
-                    
-            """
-            if x <= len_puzzle and y <= 1:
+        if number == 9:
+            return False
+                
 
-                puzzle[y_next][x_next] = 8
-                point_square(puzzle, x_next, y_next)
-            """
     return True
 
 def sudoku(puzzle):
     little_print()
     """return the solved puzzle as a 2d array of 9 x 9"""
     #print(puzzle)
-    global original
-    #original = list(puzzle)
-    #original = puzzle.copy()
-    original = copy.deepcopy(puzzle)
-    solving = puzzle
-
-    y = 0
 
     point_square(puzzle, 0, 0)
 
