@@ -1,0 +1,35 @@
+#remove text after marker detect on the same line
+
+import time
+start_time = time.time()
+
+def solution(string, markers):
+    string = string.split('\n')
+    for x_sub_str in range( len(string) ):
+        sub_str = string[x_sub_str]
+        string[x_sub_str] = sub_str.strip()
+        for marker in markers:
+            if marker in sub_str:
+                string[x_sub_str] = sub_str.split(marker)[0].strip()
+                sub_str = string[x_sub_str]
+
+    string_formated = '\n'.join(string)
+    print(string)
+    return string_formated
+
+
+def assert_equals(input_1, output, error = None):
+    global start_time
+
+    #print(input_1)
+    print("--- %s seconds ---" % (time.time() - start_time))
+    
+    if input_1 == output:
+
+        return True
+    else:
+        #print (error)
+        return False
+
+#print (assert_equals(solution("apples, pears # and bananas\ngrapes\nbananas !apples", ["#", "!"]), "apples, pears\ngrapes\nbananas"))
+print (assert_equals(solution("apples, pears # and bananas\ngrapes\nbananas #!apples", ["#", "!"]), "apples, pears\ngrapes\nbananas"))
