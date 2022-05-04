@@ -1,37 +1,43 @@
 # Hamming number
 import time
 start_time = time.time()
-import sys
-sys.setrecursionlimit(3000)
 
 import itertools
 
-def do_hamming(num ):
-    # change this function to a while
-    if num == 1:
-        return True
-    if num % 2 == 0:
-        return do_hamming(num / 2 )
-    if num % 3 == 0:
-        return do_hamming(num / 3 )
-    if num % 5 == 0:
-        return do_hamming(num / 5 )
-    return False
-
 def hamming(hamming_pos, x = 0, pos = 0 ):
-    x += 1
-    num = do_hamming(x)
-    if num:
-        pos += 1
-        if pos == hamming_pos:
-            return x
-        else:
-            #print (pos, x)
-            return hamming(hamming_pos, x, pos )
+    while True:
+        x += 1
+
+        num = x
+        while True:
+            if num == 1:
+                break
+            elif num % 2 == 0:
+                num = (num / 2 )
+            elif num % 3 == 0:
+                num = (num / 3 )
+            elif num % 5 == 0:
+                num = (num / 5 )
+
+            else:
+                break
+        if num != 1:
+            #print (num, x)
+            num = False
+
+        if num:
+            #print(pos + 1, x)
+            pos += 1
+            if pos == hamming_pos:
+                #print(x)
+                return x
+            #else:
+                #print (pos, x)
+                #return hamming(hamming_pos, x, pos )
 
     
-
-    return hamming(hamming_pos, x, pos )
+    #return x
+    #return hamming(hamming_pos, x, pos )
 
 def assert_equals(input_1, output, error = False):
     global start_time
@@ -46,4 +52,4 @@ def assert_equals(input_1, output, error = False):
         return error
 
 
-print(assert_equals(hamming(19), 32, "hamming(19) should be 32"))
+print(assert_equals(hamming(357), 182250, "hamming(357) should be 182250"))
