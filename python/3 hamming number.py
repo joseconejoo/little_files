@@ -1,43 +1,31 @@
 # Hamming number
+# https://en.wikipedia.org/wiki/Hamming_code
 import time
 start_time = time.time()
 
 import itertools
 
-def hamming(hamming_pos, x = 0, pos = 0 ):
-    while True:
-        x += 1
+def hamming(num):
+    num_list = [0] * num
 
-        num = x
-        while True:
-            if num == 1:
-                break
-            elif num % 2 == 0:
-                num = (num / 2 )
-            elif num % 3 == 0:
-                num = (num / 3 )
-            elif num % 5 == 0:
-                num = (num / 5 )
+    x2, x3, x5 = 2,3,5
 
-            else:
-                break
-        if num != 1:
-            #print (num, x)
-            num = False
+    i, j, k = 0, 0, 0
 
-        if num:
-            #print(pos + 1, x)
-            pos += 1
-            if pos == hamming_pos:
-                #print(x)
-                return x
-            #else:
-                #print (pos, x)
-                #return hamming(hamming_pos, x, pos )
+    for x_num in range(1, num):
 
-    
-    #return x
-    #return hamming(hamming_pos, x, pos )
+        num_list[x_num] = min(x2, x3, x5)
+
+        if x2 == num_list[x_num]:
+            i += 1
+            x2 = 2 * num_list[i]
+        if x3 == num_list[x_num]:
+            j += 1
+            x3 = 3 * num_list[j]
+        if x5 == num_list[x_num]:
+            k += 1
+            x5 = 5 * num_list[k]
+    return num_list[-1]
 
 def assert_equals(input_1, output, error = False):
     global start_time
