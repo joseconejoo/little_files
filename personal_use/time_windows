@@ -1,0 +1,20 @@
+import sys
+from _datetime import datetime
+
+time_tuple = (2012,  # Year
+              9,  # Month
+              6,  # Day
+              0,  # Hour
+              38,  # Minute
+              0,  # Second
+              0,  # Millisecond
+              )
+
+
+def _win_set_time(time_tuple):
+    import win32api
+    dayOfWeek = datetime(*time_tuple).isocalendar()[2]
+    t = time_tuple[:2] + (dayOfWeek,) + time_tuple[2:]
+    win32api.SetSystemTime(*t)
+
+_win_set_time(time_tuple)
